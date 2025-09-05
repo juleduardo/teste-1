@@ -1,80 +1,438 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=2.0">
-<title>Tratamento contra a calvice</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Devil May Cry - Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Reset e configurações básicas */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --vermelho-dmc: #b30000;
+            --vermelho-escuro: #800000;
+            --vermelho-claro: #ff1a1a;
+            --dourado: #ffd700;
+            --preto: #0c0c0c;
+            --cinza-escuro: #1a1a1a;
+            --branco: #ffffff;
+        }
+        
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: var(--preto);
+            overflow: hidden;
+            padding: 20px;
+        }
+        
+        /* Container do fundo */
+        .background-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .background-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.7;
+        }
+        
+        /* Overlay escuro para melhor contraste */
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(100, 0, 0, 0.7), rgba(0, 0, 0, 0.9));
+        }
+        
+        /* Container do formulário de login */
+        .login-container {
+            width: 420px;
+            padding: 40px;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 12px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            border: 2px solid var(--vermelho-dmc);
+            backdrop-filter: blur(10px);
+            transform: translateY(-20px);
+            animation: fadeIn 1s forwards;
+        }
+        
+        /* Logo personalizada */
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .logo-image {
+            max-width: 220px;
+            filter: drop-shadow(0 0 15px var(--vermelho-claro));
+        }
+        
+        .logo-text {
+            color: var(--branco);
+            font-size: 14px;
+            letter-spacing: 3px;
+            margin-top: 10px;
+            text-transform: uppercase;
+            text-shadow: 0 0 10px var(--vermelho-claro);
+        }
+        
+        /* Campos do formulário */
+        .login-box h2 {
+            margin: 0 0 30px;
+            padding: 0;
+            color: var(--branco);
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px var(--vermelho-dmc);
+            font-size: 24px;
+        }
+        
+        .input-group {
+            position: relative;
+            margin-bottom: 30px;
+        }
+        
+        .input-group input {
+            width: 100%;
+            padding: 12px 10px;
+            font-size: 16px;
+            color: var(--branco);
+            border: none;
+            border-bottom: 2px solid var(--branco);
+            outline: none;
+            background: transparent;
+            transition: 0.5s;
+        }
+        
+        .input-group label {
+            position: absolute;
+            top: 12px;
+            left: 10px;
+            font-size: 16px;
+            color: var(--branco);
+            pointer-events: none;
+            transition: 0.5s;
+        }
+        
+        .input-group input:focus ~ label,
+        .input-group input:valid ~ label {
+            top: -20px;
+            left: 0;
+            color: var(--vermelho-dmc);
+            font-size: 14px;
+            font-weight: bold;
+        }
+        
+        .input-group input:focus {
+            border-bottom: 2px solid var(--vermelho-dmc);
+        }
+        
+        /* Botão de login */
+        .login-button {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin-top: 20px;
+            background: linear-gradient(45deg, var(--vermelho-dmc), var(--vermelho-escuro));
+            color: var(--branco);
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: 0.5s;
+            box-shadow: 0 5px 15px rgba(179, 0, 0, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .login-button:hover {
+            background: linear-gradient(45deg, var(--vermelho-claro), var(--vermelho-dmc));
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(179, 0, 0, 0.6);
+        }
+        
+        .login-button:active {
+            transform: translateY(0);
+            box-shadow: 0 3px 10px rgba(179, 0, 0, 0.4);
+        }
+        
+        .login-button::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: rotate(45deg);
+            transition: all 0.6s ease;
+            opacity: 0;
+        }
+        
+        .login-button:hover::before {
+            opacity: 1;
+            animation: shine 1.5s infinite;
+        }
+        
+        /* Links adicionais */
+        .links {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        
+        .links a {
+            color: #ccc;
+            font-size: 14px;
+            text-decoration: none;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+        }
+        
+        .links a i {
+            margin-right: 5px;
+        }
+        
+        .links a:hover {
+            color: var(--vermelho-dmc);
+            text-shadow: 0 0 5px rgba(179, 0, 0, 0.5);
+        }
+        
+        /* Alertas */
+        .alert {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 15px 25px;
+            border-radius: 8px;
+            color: var(--branco);
+            font-weight: bold;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.5s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            min-width: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .alert i {
+            margin-right: 10px;
+            font-size: 20px;
+        }
+        
+        .success {
+            background: linear-gradient(45deg, #2ecc71, #27ae60);
+            border: 1px solid #27ae60;
+        }
+        
+        .error {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            border: 1px solid #c0392b;
+        }
+        
+        .show {
+            opacity: 1;
+        }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #666;
+            font-size: 12px;
+        }
+        
+        /* Animações */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes shine {
+            0% {
+                transform: translateX(-100%) rotate(45deg);
+            }
+            100% {
+                transform: translateX(100%) rotate(45deg);
+            }
+        }
+        
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(179, 0, 0, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 15px rgba(179, 0, 0, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(179, 0, 0, 0);
+            }
+        }
+        
+        /* Efeito de fogo no texto */
+        .fire-text {
+            text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px var(--vermelho-claro), 
+                         0 0 20px var(--vermelho-claro), 0 0 25px var(--vermelho-claro);
+            animation: flicker 2s infinite alternate;
+        }
+        
+        @keyframes flicker {
+            0%, 18%, 22%, 25%, 53%, 57%, 100% {
+                text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px var(--vermelho-claro), 
+                             0 0 20px var(--vermelho-claro), 0 0 25px var(--vermelho-claro);
+            }
+            20%, 24%, 55% {
+                text-shadow: none;
+            }
+        }
+        
+        /* Responsividade */
+        @media (max-width: 480px) {
+            .login-container {
+                width: 90%;
+                padding: 30px;
+            }
+            
+            .logo-image {
+                max-width: 180px;
+            }
+            
+            .links {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .links a {
+                justify-content: center;
+            }
+        }
+    </style>
 </head>
 <body>
-
-<!-- Cabeçalho da página -->
-<header>
-<h1>cure aqui sua careca</h1>
-<p>com tratamento especializado e personalizado</p>
-</header>
-
-<!-- Menu de navegação -->
-<nav>
-<ul>
-<li><a href="#home">Home</a></li>
-<li><a href="#sobre">Sobre</a></li>
-<li><a href="#servicos">Serviços</a></li>
-<li><a href="#contato">Contato</a></li>
-</ul>
-</nav>
-
-<!-- Conteúdo principal da página -->
-<main>
-<section id="home">
-<h2>Bem-vindo senhor careca!</h2>
-
-<p>Conteúdo inicial da página. Pode ser uma introdução ou uma saudação ao
-visitante.</p>
-</section>
-
-<section id="sobre">
-<h2>Sobre Nós</h2>
-<p>Descrição sobre a empresa, o site ou a pessoa, dependendo do contexto da
-pág.</p>
-</section>
-
-<section id="servicos">
-<h2>Nossos Serviços</h2>
-<p>"A calvície é uma preocupação comum entre muitas pessoas, e com o avanço da tecnologia, diversos tratamentos eficazes estão disponíveis para ajudar a recuperar a autoestima e a confiança. Um site especializado em tratamento da calvície oferece uma gama de serviços que visam atender às necessidades individuais de cada paciente.
-1. Consultoria Personalizada
-O primeiro passo para um tratamento eficaz é uma avaliação detalhada. Profissionais qualificados realizam consultas para entender o histórico do paciente, fatores genéticos e estilo de vida, permitindo a elaboração de um plano de tratamento personalizado.
-2. Tratamentos Não Invasivos
-Para aqueles que preferem opções menos invasivas, o site oferece tratamentos como:
-Terapia a Laser: Utiliza tecnologia de laser de baixa intensidade para estimular o crescimento capilar.
-Minoxidil: Aplicação de soluções tópicas que ajudam a revitalizar os folículos capilares.
-3. Procedimentos Cirúrgicos
-Para casos mais avançados, o site também disponibiliza informações sobre procedimentos cirúrgicos, como:
-Transplante Capilar: Técnicas como FUE (Extração de Unidade Folicular) que permitem a redistribuição de fios capilares de áreas doadoras para regiões calvas.
-Redução de Couro Cabeludo: Procedimento que remove áreas calvas e junta o cabelo restante.
-4. Acompanhamento Contínuo
-Um aspecto crucial dos serviços oferecidos é o acompanhamento pós-tratamento. Os pacientes recebem orientações sobre cuidados, medicação e são monitorados regularmente para garantir a eficácia do tratamento e realizar ajustes quando necessário.
-5. Suporte Psicológico
-Além dos aspectos físicos, o site também reconhece a importância do bem-estar emocional. Oferece suporte psicológico para ajudar os pacientes a lidarem com a ansiedade e a insegurança relacionadas à calvície.".</p>
-</section>
-
-<section id="contato">
-<h2>what-41 9625-9409</h2>
-<p>lutacontraacalvice@gmail.com.</p>
-</section>
-    <display: <h2>;
-     
-    align-items: "contato";    
-
-    background-color: #A9A9A9;
-    height: 100%;
-    padding: 15px;
-    gap: 5px;>
-</main>
-
-<!-- Rodapé da página -->
-<footer>
-<p>2024 - Todos os direitos reservados – Profania dos calvos</p>
-</footer>
-
+    <!-- Container do fundo -->
+    <div class="background-container">
+        <!-- Imagem de fundo fornecida -->
+        <img src="https://images.hdqwalls.com/download/devil-may-cry-5-4k-6r-1920x1080.jpg" class="background-image" alt="Devil May Cry Background">
+        <div class="overlay"></div>
+    </div>
+    
+    <div class="login-container">
+        <div class="logo">
+            <!-- Logo personalizada Devil May Cry -->
+            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjUwIiBoZWlnaHQ9IjEyMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxwYXRoIGQ9Ik00MCA0MCBRMTI1IC01IDE5NSA1MCBRMTI1IDQwIDQwIDQwIiBzdHJva2U9IiNmMWMwYzAiIHN0cm9rZS13aWR0aD0iNCIgZmlsbD0ibm9uZSIgLz4KICAgIDxwYXRoIGQ9Ik01NSA2MCBRMTI1IDIwIDIwMCA2MCBRMTI1IDU1IDU1IDYwIiBzdHJva2U9IiNmMWMwYzAiIHN0cm9rZS13aWR0aD0iNCIgZmlsbD0ibm9uZSIgLz4KICAgIDx0ZXh0IHg9IjEyNSIgeT0iODAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxOCIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IiNmMWMwYzAiPkRldmlsIE1heSBDcnk8L3RleHQ+CiAgICA8dGV4dCB4PSIxMjUiIHk9IjEwMCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjEyIiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iI2YxYzBjMCI+QWNjZXNzIFJlc3RyaWN0ZWQ8L3RleHQ+Cjwvc3ZnPg==" class="logo-image" alt="Devil May Cry Logo">
+            <div class="logo-text fire-text">Demon Hunter Access</div>
+        </div>
+        
+        <div class="login-box">
+            <h2 class="fire-text">Login</h2>
+            <form id="loginForm">
+                <div class="input-group">
+                    <input type="text" id="username" required>
+                    <label for="username"><i class="fas fa-user"></i> Usuário</label>
+                </div>
+                <div class="input-group">
+                    <input type="password" id="password" required>
+                    <label for="password"><i class="fas fa-lock"></i> Senha</label>
+                </div>
+                <button type="submit" class="login-button">
+                    <i class="fas fa-skull"></i> ACESSAR
+                </button>
+                
+                <div class="links">
+                    <a href="#"><i class="fas fa-user-plus"></i> Criar conta</a>
+                    <a href="#"><i class="fas fa-key"></i> Esqueci a senha</a>
+                </div>
+            </form>
+        </div>
+        
+        <div class="footer">
+            &copy; 2023 Devil May Cry Security • Apenas caçadores autorizados
+        </div>
+    </div>
+    
+    <div id="alertBox" class="alert"></div>
+    
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            // Simulação de autenticação
+            if (username === 'dante' && password === 'redqueen') {
+                showAlert('<i class="fas fa-check-circle"></i> Acesso concedido! Bem-vindo, caçador de demônios.', 'success');
+            } else if (username === 'vergil' && password === 'yamato') {
+                showAlert('<i class="fas fa-check-circle"></i> Acesso concedido! Poder e motivação detectados.', 'success');
+            } else if (username === 'nero' && password === 'devilbringer') {
+                showAlert('<i class="fas fa-check-circle"></i> Acesso concedido! Bem-vindo, caçador jovem.', 'success');
+            } else {
+                showAlert('<i class="fas fa-exclamation-triangle"></i> Credenciais inválidas. Tente: dante/redqueen', 'error');
+            }
+        });
+        
+        function showAlert(message, type) {
+            const alertBox = document.getElementById('alertBox');
+            alertBox.innerHTML = message;
+            alertBox.className = `alert ${type} show`;
+            
+            setTimeout(() => {
+                alertBox.classList.remove('show');
+            }, 3000);
+        }
+        
+        // Adiciona efeito de foco nos inputs
+        const inputs = document.querySelectorAll('input');
+        inputs.forEach(input => {
+            input.addEventListener('focus', () => {
+                input.parentElement.classList.add('focused');
+            });
+            input.addEventListener('blur', () => {
+                if (input.value === '') {
+                    input.parentElement.classList.remove('focused');
+                }
+            });
+            
+            // Verifica se há valor ao carregar a página
+            if (input.value !== '') {
+                input.parentElement.classList.add('focused');
+            }
+        });
+    </script>
 </body>
 </html>
