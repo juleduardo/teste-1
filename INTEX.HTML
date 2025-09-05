@@ -1,50 +1,222 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=2.0">
-    <title>cura careca</title>
-    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Devil May Cry</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: #000;
+            overflow: hidden;
+        }
+        
+        .background-gif {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            opacity: 0.7;
+        }
+        
+        .login-container {
+            width: 400px;
+            padding: 40px;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 10px;
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.5);
+            border: 1px solid #b30000;
+        }
+        
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .logo img {
+            max-width: 200px;
+            filter: drop-shadow(0 0 10px #ff0000);
+        }
+        
+        .login-box h2 {
+            margin: 0 0 30px;
+            padding: 0;
+            color: #fff;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px #b30000;
+        }
+        
+        .user-box {
+            position: relative;
+            margin-bottom: 30px;
+        }
+        
+        .user-box input {
+            width: 100%;
+            padding: 10px 0;
+            font-size: 16px;
+            color: #fff;
+            margin-bottom: 30px;
+            border: none;
+            border-bottom: 1px solid #fff;
+            outline: none;
+            background: transparent;
+        }
+        
+        .user-box label {
+            position: absolute;
+            top: 0;
+            left: 0;
+            padding: 10px 0;
+            font-size: 16px;
+            color: #fff;
+            pointer-events: none;
+            transition: 0.5s;
+        }
+        
+        .user-box input:focus ~ label,
+        .user-box input:valid ~ label {
+            top: -20px;
+            left: 0;
+            color: #b30000;
+            font-size: 12px;
+        }
+        
+        .login-button {
+            display: inline-block;
+            padding: 10px 20px;
+            color: #b30000;
+            font-size: 16px;
+            text-decoration: none;
+            text-transform: uppercase;
+            overflow: hidden;
+            transition: 0.5s;
+            margin-top: 10px;
+            letter-spacing: 3px;
+            background: transparent;
+            border: 1px solid #b30000;
+            width: 100%;
+            cursor: pointer;
+            text-align: center;
+        }
+        
+        .login-button:hover {
+            background: #b30000;
+            color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 5px #b30000, 0 0 25px #b30000, 0 0 50px #b30000;
+        }
+        
+        .alert {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 15px 25px;
+            border-radius: 5px;
+            color: white;
+            font-weight: bold;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.5s;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        
+        .success {
+            background-color: #2ecc71;
+            border: 1px solid #27ae60;
+        }
+        
+        .error {
+            background-color: #e74c3c;
+            border: 1px solid #c0392b;
+        }
+        
+        .show {
+            opacity: 1;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+            font-size: 12px;
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <nav class="navbar">
-            <div class="logo">
-                <img src="careca.png" alt="Logo">
-            </div>
-            <ul class="menu">
-                <li><a href="#" class="active">Home</a></li>
-                <li><a href="#">o que é nossa empresa</a></li>
-                <li class="dropdown">
-                    <a href="#">TRATAMENTOS</a>
-                    <ul class="dropdown-content">
-                        <li><a href="#">A LASER </a></li>
-                        <li><a href="#">Implante capilar</a></li>
-                        <li><a href="#">produtos capilar</a></li>
-                        <li><a href="#">shampooo especializado</a></li>
-                    </ul>
-                </li>
-                <li><a href="#">Contatos</a></li>
-            </ul>
-            <div class="social-links">
-                <img src="instagram 1.png" href="https://www.instagram.com" target="_blank" alt="Instagram"></a>
-                <img src="facebook 1.png" href="https://www.facebook.com" target="_blank"alt="Facebook"></a>
-            </div>
-        </nav>
-    </header>
+    <!-- GIF de fundo (substitua pela URL do seu GIF) -->
+    <img src="https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif" class="background-gif" alt="Devil May Cry Background">
     
-    <div class="carousel">
-        <div class="carousel-images">
-            <img src="01.png" alt="Imagem 1">
-            <img src="2.png" alt="Imagem 2">
-            <img src="3.png" alt="Imagem 3">
+    <div class="login-container">
+        <div class="logo">
+            <!-- Logo personalizada Devil May Cry -->
+            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDx0ZXh0IHg9IjEwIiB5PSI1MCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjI0IiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iI2YxYzBjMCI+RGV2aWwgTWF5IENyeTwvdGV4dD4KICAgIDxwYXRoIGQ9Ik0xMCA3MCBRNTAgNDUgOTAgNzAiIHN0cm9rZT0iI2YxYzBjMCIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIi8+Cjwvc3ZnPg==" alt="Devil May Cry Logo">
         </div>
-        <button class="prev" onclick="moveCarousel(-1)">&#10094;</button>
-        <button class="next" onclick="moveCarousel(1)">&#10095;</button>
+        
+        <div class="login-box">
+            <h2>Acesso Restrito</h2>
+            <form id="loginForm">
+                <div class="user-box">
+                    <input type="text" id="username" required>
+                    <label>Usuário</label>
+                </div>
+                <div class="user-box">
+                    <input type="password" id="password" required>
+                    <label>Senha</label>
+                </div>
+                <button type="submit" class="login-button">
+                    ENTRAR
+                </button>
+            </form>
+        </div>
+        
+        <div class="footer">
+            Apenas caçadores de demônios autorizados
+        </div>
     </div>
-
-</div>
-<script src="script.js"></script>
-
+    
+    <div id="alertBox" class="alert"></div>
+    
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            // Simulação de autenticação (substitua por sua lógica real)
+            if (username === 'dante' && password === 'redqueen') {
+                showAlert('Acesso concedido! Bem-vindo, caçador de demônios.', 'success');
+            } else {
+                showAlert('Credenciais inválidas. Tente novamente.', 'error');
+            }
+        });
+        
+        function showAlert(message, type) {
+            const alertBox = document.getElementById('alertBox');
+            alertBox.textContent = message;
+            alertBox.className = `alert ${type} show`;
+            
+            setTimeout(() => {
+                alertBox.classList.remove('show');
+            }, 3000);
+        }
+    </script>
 </body>
 </html>
